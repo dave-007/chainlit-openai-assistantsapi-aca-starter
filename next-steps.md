@@ -19,34 +19,6 @@ To troubleshoot any issues, see [troubleshooting](#troubleshooting).
 
 Configure environment variables for running services by updating `settings` in [main.parameters.json](./infra/main.parameters.json).
 
-### Configure CI/CD pipeline
-
-1. Create a workflow pipeline file locally. The following starters are available:
-   - [Deploy with GitHub Actions](https://github.com/Azure-Samples/azd-starter-bicep/blob/main/.github/workflows/azure-dev.yml)
-   - [Deploy with Azure Pipelines](https://github.com/Azure-Samples/azd-starter-bicep/blob/main/.azdo/pipelines/azure-dev.yml)
-2. Run `azd pipeline config` to configure the deployment pipeline to connect securely to Azure.
-
-## What was added
-
-### Infrastructure configuration
-
-To describe the infrastructure and application, `azure.yaml` along with Infrastructure as Code files using Bicep were added with the following directory structure:
-
-```yaml
-- azure.yaml        # azd project configuration
-- infra/            # Infrastructure-as-code Bicep files
-  - main.bicep      # Subscription level resources
-  - resources.bicep # Primary resource group resources
-  - modules/        # Library modules
-```
-
-The resources declared in [resources.bicep](./infra/resources.bicep) are provisioned when running `azd up` or `azd provision`.
-This includes:
-
-
-- Azure Container App to host the 'src' service.
-
-More information about [Bicep](https://aka.ms/bicep) language.
 
 ### Build from source (no Dockerfile)
 
@@ -66,10 +38,6 @@ Oryx will automatically set `PORT` to a default value of `80` (port `8080` for J
 
 1. Update your application code or configuration to listen to the port specified by the `PORT` variable
 1. (Alternatively) Search for `targetPort` in a .bicep file under the `infra/app` folder, and update the variable to match the port used by the application.
-
-## Billing
-
-Visit the *Cost Management + Billing* page in Azure Portal to track current spend. For more information about how you're billed, and how you can monitor the costs incurred in your Azure subscriptions, visit [billing overview](https://learn.microsoft.com/azure/developer/intro/azure-developer-billing).
 
 ## Troubleshooting
 

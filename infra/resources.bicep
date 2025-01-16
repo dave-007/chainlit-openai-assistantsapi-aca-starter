@@ -120,6 +120,10 @@ module src 'br/public:avm/res/app/container-app:0.8.0' = {
             name: 'PORT'
             value: '8080'
           }
+          {
+            name: 'PORT'
+            value: '8080'
+          }
         ],
         srcEnv,
         map(srcSecrets, secret => {

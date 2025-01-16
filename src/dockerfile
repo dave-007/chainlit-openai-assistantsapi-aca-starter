@@ -94,4 +94,3 @@ EXPOSE $PORT
 # The ENTRYPOINT instruction allows you to configure a container that will run as an executable.
 # For more information, see: https://docs.docker.com/engine/reference/builder/#entrypoint
 CMD chainlit run $FILENAME -h --port=8080 --host=0.0.0.0
-#CMD ["python", "-m", "chainlit", "run", $FILENAME, "-h", "--port", $PORT]
