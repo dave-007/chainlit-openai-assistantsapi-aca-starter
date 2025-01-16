@@ -9,9 +9,32 @@ param environmentName string
 @description('Primary location for all resources')
 param location string
 
-param srcExists bool
+param chainlitExists bool
+
 @secure()
-param srcDefinition object
+@minLength(1)
+@description('OpenAI API Key to use')
+param openAiApiKey string
+
+@secure()
+@minLength(1)
+@description('OpenAI Assistant ID to use')
+param openAssistantId string
+
+var openAIKeysDefinition = {
+  settings: [
+    {
+      name: 'OPENAI_API_KEY'
+      secret: true
+      value: openAiApiKey
+    }
+    {
+      name: 'OPENAI_ASSISTANT_ID'
+      secret: true
+      value: openAssistantId
+    }
+  ]
+}
 
 @description('Id of the user or app to assign application roles')
 param principalId string
@@ -39,8 +62,8 @@ module resources 'resources.bicep' = {
     location: location
     tags: tags
     principalId: principalId
-    srcExists: srcExists
-    srcDefinition: srcDefinition
+    chainlitExists: chainlitExists
+    openAIKeysDefinition: openAIKeysDefinition
   }
 }
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = resources.outputs.AZURE_CONTAINER_REGISTRY_ENDPOINT

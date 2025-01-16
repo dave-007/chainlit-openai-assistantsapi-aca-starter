@@ -8,28 +8,14 @@
       "location": {
         "value": "${AZURE_LOCATION}"
       },
-      "srcExists": {
-        "value": "${SERVICE_SRC_RESOURCE_EXISTS=false}"
+      "chainlitExists": {
+        "value": "${SERVICE_CHAINLIT_RESOURCE_EXISTS=false}"
       },
-      "srcDefinition": {
-        "value": {
-          "settings": [
-            {
-              "name": "",
-              "value": "${OPENAI_API_KEY}",
-              "secret": true,
-              "_comment_name": "The OpenAI API Key to use. If empty, ignored.",
-              "_comment_value": "The value to provide. This can be a fixed literal, or an expression like ${OPENAI_API_KEY} to use the value of 'OPENAI_API_KEY' from the current environment."
-            },
-            {
-              "name": "",
-              "value": "${OPENAI_ASSISTANT_ID}",
-              "secret": true,
-              "_comment_name": "The OPENAI_ASSISTANT_ID to use. If empty, ignored.",
-              "_comment_value": "The value to provide. This can be a fixed literal, or an expression like ${OPENAI_ASSISTANT_ID} to use the value of 'OPENAI_ASSISTANT_ID' from the current environment."
-            }
-          ]
-        }
+      "openAiApiKey": {
+        "value": "${OPENAI_API_KEY}"
+      },
+      "openAiAssistantId": {
+        "value": "${OPENAI_ASSISTANT_ID}"
       },
       "principalId": {
         "value": "${AZURE_PRINCIPAL_ID}"

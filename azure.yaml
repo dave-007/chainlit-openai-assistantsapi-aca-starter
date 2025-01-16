@@ -4,7 +4,7 @@ name: chainlit-openai-assistantsapi-aca-starter
 metadata:
     template: azd-init@1.11.1
 services:
-    src:
+    chainlit:
         project: src
         host: containerapp
         language: python

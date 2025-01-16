@@ -5,9 +5,9 @@ param location string = resourceGroup().location
 param tags object = {}
 
 
-param srcExists bool
+param chainlitExists bool
 @secure()
-param srcDefinition object
+param openAIKeysDefinition object
 
 @description('Id of the user or app to assign application roles')
 param principalId string
@@ -68,18 +68,18 @@ module srcIdentity 'br/public:avm/res/managed-identity/user-assigned-identity:0.
 module srcFetchLatestImage './modules/fetch-container-image.bicep' = {
   name: 'src-fetch-image'
   params: {
-    exists: srcExists
-    name: 'src'
+    exists: chainlitExists
+    name: 'chainlit'
   }
 }
 
-var srcAppSettingsArray = filter(array(srcDefinition.settings), i => i.name != '')
-var srcSecrets = map(filter(srcAppSettingsArray, i => i.?secret != null), i => {
+var appSettingsArray = filter(array(openAIKeysDefinition.settings), i => i.name != '')
+var srcSecrets = map(filter(appSettingsArray, i => i.?secret != null), i => {
   name: i.name
   value: i.value
   secretRef: i.?secretRef ?? take(replace(replace(toLower(i.name), '_', '-'), '.', '-'), 32)
 })
-var srcEnv = map(filter(srcAppSettingsArray, i => i.?secret == null), i => {
+var srcEnv = map(filter(appSettingsArray, i => i.?secret == null), i => {
   name: i.name
   value: i.value
 })
@@ -117,7 +117,7 @@ module src 'br/public:avm/res/app/container-app:0.8.0' = {
             value: srcIdentity.outputs.clientId
           }
           {
-            name: 'PORT'
+            name: 'CHAINLIT_PORT'
             value: '8080'
           }
           {
@@ -144,7 +144,7 @@ module src 'br/public:avm/res/app/container-app:0.8.0' = {
     ]
     environmentResourceId: containerAppsEnvironment.outputs.resourceId
     location: location
-    tags: union(tags, { 'azd-service-name': 'src' })
+    tags: union(tags, { 'azd-service-name': 'chainlit' })
   }
 }
 // Create a keyvault to store secrets
