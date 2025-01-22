@@ -17,9 +17,12 @@ You need to install the following tools to run locally on you machine:
 * [Docker Desktop](https://www.docker.com/products/docker-desktop/)
 * [Git](https://git-scm.com/downloads)
 * Azure Subscription (Can signup for a [free account](https://azure.microsoft.com/en-us/pricing/purchase-options/azure-account?icid=azurefreeaccount) if you don't have one)
+* An OpenAI account to create API Key and Assistant IDs
 * Clone this repo to a local directory
 
 ## Deploying to Azure with azd
+
+In the command line, navigate to the root of this repository.
 
 1. Login to your Azure subscription using `azd`
 

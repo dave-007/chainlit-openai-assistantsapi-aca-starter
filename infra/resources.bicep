@@ -154,6 +154,7 @@ module keyVault 'br/public:avm/res/key-vault/vault:0.6.1' = {
     name: '${abbrs.keyVaultVaults}${resourceToken}'
     location: location
     tags: tags
+    sku: 'standard'
     enableRbacAuthorization: false
     accessPolicies: [
       {
