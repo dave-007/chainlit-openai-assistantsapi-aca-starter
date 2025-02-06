@@ -21,6 +21,47 @@ param openAiApiKey string
 @description('OpenAI Assistant ID to use')
 param openAssistantId string
 
+@secure()
+@minLength(1)
+@description('Chainlit Auth Secret')
+param chainlistAuthSecret string
+
+@minLength(1)
+@description('Entra ID Tenant Id')
+param entraIdTenantId string
+
+@minLength(1)
+@description('Entra ID App Registration Client Id')
+param entraIdClientId string
+
+@secure()
+@minLength(1)
+@description('Entra ID App Registration Secret')
+param entraIdClientSecret string
+
+@secure()
+@minLength(1)
+@description('Database Connection String')
+param databaseConnectionString string
+
+@minLength(1)
+@description('Storage Account Name')
+param storageAccountName string
+
+@minLength(1)
+@description('Storage Container Name')
+param containerName string
+
+@secure()
+@minLength(1)
+@description('Storage Access Key')
+param storageAccessKey string
+
+@secure()
+@minLength(1)
+@description('Storage Connection String')
+param storageConnectionString string
+
 var openAIKeysDefinition = {
   settings: [
     {
@@ -32,6 +73,31 @@ var openAIKeysDefinition = {
       name: 'OPENAI_ASSISTANT_ID'
       secret: true
       value: openAssistantId
+    }
+    {
+      name: 'CHAINLIT_AUTH_SECRET'
+      secret: true
+      value: chainlistAuthSecret
+    }
+    {
+      name: 'OAUTH_AZURE_AD_CLIENT_SECRET'
+      secret: true
+      value: entraIdClientSecret
+    }
+    {
+      name: 'DATABASE_URL'
+      secret: true
+      value: databaseConnectionString
+    }
+    {
+      name: 'APP_AZURE_STORAGE_ACCESS_KEY'
+      secret: true
+      value: storageAccessKey
+    }
+    {
+      name: 'APP_AZURE_STORAGE_CONNECTION_STRING'
+      secret: true
+      value: storageConnectionString
     }
   ]
 }
@@ -64,6 +130,10 @@ module resources 'resources.bicep' = {
     principalId: principalId
     chainlitExists: chainlitExists
     openAIKeysDefinition: openAIKeysDefinition
+    entraIdTenantId: entraIdTenantId
+    entraIdClientId: entraIdClientId
+    storageAccountName: storageAccountName
+    containerName: containerName
   }
 }
 output AZURE_CONTAINER_REGISTRY_ENDPOINT string = resources.outputs.AZURE_CONTAINER_REGISTRY_ENDPOINT

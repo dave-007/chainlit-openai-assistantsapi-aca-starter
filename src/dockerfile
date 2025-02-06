@@ -42,6 +42,10 @@ RUN apt-get update && apt-get install -y \
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
+
+# Upgrade pip to the latest version
+RUN python -m pip install --upgrade pip
+
 # Clone the requirements.txt which contains dependencies to WORKDIR
 # COPY has two forms:
 # * COPY <src> <dest> (this copies the files from the local machine to the container's own filesystem)
@@ -50,7 +54,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 COPY requirements.txt .
 
 # Install the Python dependencies
-RUN pip install --no-cache-dir --no-deps -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Stage 2 - Copy only necessary files to the runner stage
 
