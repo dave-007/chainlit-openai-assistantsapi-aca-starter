@@ -4,6 +4,10 @@ param location string = resourceGroup().location
 @description('Tags that will be applied to all resources')
 param tags object = {}
 
+param entraIdTenantId string
+param entraIdClientId string
+param storageAccountName string
+param containerName string
 
 param chainlitExists bool
 @secure()
@@ -122,7 +126,31 @@ module src 'br/public:avm/res/app/container-app:0.8.0' = {
           }
           {
             name: 'PORT'
-            value: '8080'
+            value: 'true'
+          }
+          {
+            name: 'OAUTH_AZURE_AD_TENANT_ID'
+            value: entraIdTenantId
+          }
+          {
+            name: 'OAUTH_AZURE_AD_CLIENT_ID'
+            value: entraIdClientId
+          }
+          {
+            name: 'OAUTH_AZURE_AD_ENABLE_SINGLE_TENANT'
+            value: 'true'
+          }
+          {
+            name: 'OAUTH_PROMPT'
+            value: 'login'
+          }
+          {
+            name: 'BUCKET_NAME'
+            value: containerName
+          }
+          {
+            name: 'APP_AZURE_STORAGE_ACCOUNT'
+            value: storageAccountName
           }
         ],
         srcEnv,
