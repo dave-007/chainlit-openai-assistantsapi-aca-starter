@@ -1,7 +1,7 @@
 import os
 import plotly
 from pathlib import Path
-from typing import List
+from typing import List, Dict, Optional
 
 from openai import AsyncAssistantEventHandler, AsyncOpenAI, OpenAI
 
@@ -188,6 +188,9 @@ async def start_chat():
     # Store thread ID in user session for later use
     cl.user_session.set("thread_id", thread.id)
     
+    app_user = cl.user_session.get("user")
+    await cl.Message(f"Hello {app_user.identifier}").send()
+    
     
 @cl.on_stop
 async def stop_chat():
@@ -217,3 +220,11 @@ async def main(message: cl.Message):
         event_handler=EventHandler(assistant_name=assistant.name),
     ) as stream:
         await stream.until_done()
+
+@cl.oauth_callback
+def oauth_callback(provider_id: str, token: str, raw_user_data: Dict[str, str], default_user: cl.User) -> Optional[cl.User]:
+  return default_user
+
+@cl.on_chat_resume
+async def on_chat_resume(thread):
+    pass
