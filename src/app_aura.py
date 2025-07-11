@@ -91,7 +91,7 @@ async def on_chat_start():
      # Initialize agent AI search tool and add the search index connection id
     ai_search = AzureAISearchTool(
         index_connection_id=conn_id,
-        index_name="sample_index",
+        index_name="azureblob-index",
         query_type=AzureAISearchQueryType.SIMPLE,
         top_k=3,
         filter="",
@@ -165,8 +165,8 @@ async def on_chat_start():
         await agents_client.update_agent(
             agent_id=ASSISTANT_ID,
             instructions=system_instructions,
-            tools=file_search.definitions,
-            tool_resources=file_search.resources
+            tools=ai_search.definitions,
+            tool_resources=ai_search.resources
             )
     else:
         print(f"Instructions file not found at {instructions_path}")
