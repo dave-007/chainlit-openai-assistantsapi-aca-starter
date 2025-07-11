@@ -1,0 +1,17 @@
+# deploy  docker image to AZURE_SUBSCRIPTION_ID
+
+# 1. Log in to your ACR
+az acr login --name iecr1
+
+# 2. Build and tag the image
+docker build -f .\src\dockerfile -t iecr1.azurecr.io/aura:latest .
+
+# 2a. Tag the image with an additional tag
+# Replace `<new-tag>` with your desired tag
+docker tag iecr1.azurecr.io/aura:latest iecr1.azurecr.io/aura:latest
+
+# 3. Push to the registry
+docker push iecr1.azurecr.io/aura:latest
+
+# 3b. Push the new tag to the registry
+docker push iecr1.azurecr.io/aura:<new-tag>

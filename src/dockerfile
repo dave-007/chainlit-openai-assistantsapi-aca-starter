@@ -21,8 +21,8 @@ WORKDIR /app
 # The ENV instruction sets the environment variable <key> to the value <value>.
 # This value will be in the environment of all “descendant” Dockerfile commands and can be replaced inline in many as well.
 # For more information, see: https://docs.docker.com/engine/reference/builder/#env
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONUNBUFFERED=1
 
 # Install git so that we can clone the app code from a remote repo using the RUN instruction.
 # The RUN comand has 2 forms:
@@ -59,10 +59,12 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Stage 2 - Copy only necessary files to the runner stage
 
 # The FROM instruction initializes a new build stage for the application
-FROM python:3.12-slim
+FROM python:3.13-slim
+# FROM python:alpine
 
 # Define the filename to copy as an argument
-ARG FILENAME=app.py
+# ARG FILENAME=app.py
+ARG FILENAME=app_aura.py
 
 # Deefine the port to run the application on as an argument
 ARG PORT=8080
@@ -97,4 +99,5 @@ EXPOSE $PORT
 # * ENTRYPOINT command param1 param2 (shell form)
 # The ENTRYPOINT instruction allows you to configure a container that will run as an executable.
 # For more information, see: https://docs.docker.com/engine/reference/builder/#entrypoint
-CMD chainlit run $FILENAME -h --port=8080 --host=0.0.0.0
+# Use JSON array form for CMD to preserve signals and proper exec form
+CMD ["chainlit", "run", "$FILENAME", "-h", "--port=8080", "--host=0.0.0.0"]
