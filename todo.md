@@ -1,0 +1,6 @@
+- refine ai search with references, metadata
+- get container deployed
+- get azdo pipeline deploying
+- investigate data explorer mcp server
+- get inventory data in more explorable structure (xlsx -> csv and json)
+- leverage algolia search index?
